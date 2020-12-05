@@ -1,9 +1,14 @@
 import tkinter as tk
+from tkinter import filedialog
+import os
 
 root = tk.Tk()
 
 def ImportFile():
-    print("Menu works")
+    filelocation = filedialog.askopenfilename(initialdir="/", title="Select a file", filetypes=(("Texts", "*.txt"), ("All files", "*.*")))
+    file = open(filelocation, "r")
+    editor.insert(tk.END, file.readlines())
+    
 
 canvas = tk.Canvas(root, width = 500, height = 200)
 canvas.pack()
