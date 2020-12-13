@@ -8,9 +8,11 @@ root.title("Text Editor")
 def NewFile():
     savingcurrent = messagebox.askquestion(title="Unsaved file", message="You have unsaved work. Do you want to save it?")
     if savingcurrent == "yes":
-        SaveFile()
-            
-    editor.delete(1.0, tk.END)
+        file = SaveFile()
+        if file is not None:
+            editor.delete(1.0, tk.END)
+    else:
+        editor.delete(1.0, tk.END)
 
 def OpenFile():
     filelocation = filedialog.askopenfilename(initialdir="/", title="Select a file", filetypes=(("Texts", "*.txt"), ("All files", "*.*")))
@@ -21,10 +23,10 @@ def OpenFile():
 def SaveFile():
     file = filedialog.asksaveasfile(filetypes=[("Text (.txt)", "*.txt")])
     if file is None:
-        return None
+        return file
     file.write(editor.get("0.0", tk.END))
     file.close()
-    
+    return file
 
 canvas = tk.Canvas(root, width = 500, height = 200)
 canvas.pack()
